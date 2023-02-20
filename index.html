@@ -24,27 +24,32 @@
   }
 </style>
 
-<form id="form">
+<form id="form" novalidate>
   <h1>Launch directly into your own customized CrUX Dashboard</h1>
   <p><label for="origin">Submit a valid origin&hellip;</label></p>
-  <input id="origin" type="url" placeholder="https://developer.chrome.com" required>
-  <p><strong>What is a valid origin?</strong> <code>https://www.example.com</code>. Protocol (http or https), optional subdomain (www), and domain (example.com). No trailing slash (/) or file path (/rviscomi/crux-dash-launcher).</p>
+  <input id="origin" type="url" name="originUrl" onblur="checkURL(this)" placeholder="https://developer.chrome.com" required>
+  <p><strong>What is a valid origin?</strong> <code>https://www.example.com</code>. Optional Protocol (http or https), optional subdomain (www), and domain (example.com). No trailing slash (/) or file path (/rviscomi/crux-dash-launcher).</p>
   <p><strong>Does it work for all websites?</strong> No. The CrUX dataset tracks about 6 million popular websites monthly. If your website isn't popular enough, it won't be in the dataset. Don't ask how popular is popular enough, we won't say.</p>
-  <p>Also try the <a href="https://dev.to/rick_viscomi/making-a-custom-crux-dash-shortcut-in-chrome-3i4e">custom <code>cruxdash</code> shortcut in Chrome</a> to launch directy into your own custom dashboard from the URL bar.</p>
-  <p>View the source on <a href="https://github.com/rviscomi/crux-dash-launcher">GitHub</a>. Made by <a href="https://twitter.com/rick_viscomi">@rick_viscomi</a>.</p>
+  <p>Also try the <a href="https://dev.to/rick_viscomi/making-a-custom-crux-dash-shortcut-in-chrome-3i4e" target="_blank">custom <code>cruxdash</code> shortcut in Chrome</a> to launch directy into your own custom dashboard from the URL bar.</p>
+  <p>View the source on <a href="https://github.com/onlyoneaman/crux-dash-launcher">GitHub</a>. Made by <a href="https://twitter.com/onlyoneaman" target="_blank">@onlyoneaman</a>.</p>
 </form>
 
 <script>
 var form = document.getElementById('form');
 var origin = document.getElementById('origin');
 form.addEventListener('submit', function(e) {
+  var value = origin.value;
   e.preventDefault();
-  var url = new URL(origin.value);
+  var regExr = /^(http:|https:)\/\/.*$/m;
+  var result = regExr.test(value);
+  if (!result){
+    var value = "https://"+value;
+  }
+  var url = new URL(value);
   var encoded_origin = encodeURIComponent(url.origin);
   var url = 'https://datastudio.google.com/reporting/bbc5698d-57bb-4969-9e07-68810b9fa348/page/keDQB?params=%7B%22origin%22:%22' + encoded_origin + '%22%7D';
-  window.location = url;
+  window.open(url, "_blank");
 });
-  
 var url = new URL(window.location);
 var search = url.searchParams.get('origin');
 if (search) {
