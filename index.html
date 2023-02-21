@@ -64,11 +64,8 @@
     if ("ga" in window) {
       tracker = ga.getAll()[0];
       if (tracker)
-          tracker.send("event", "Test", "Test GA");
-    } else {
-      console.log("nothing")
+          tracker.send("event", "lookup", "url", url);
     }
-    ga('send', 'event', 'CrUX', 'lookup', 'url', url);
     window.open(url, "_blank");
   });
   var url = new URL(window.location);
