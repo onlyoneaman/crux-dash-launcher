@@ -64,7 +64,7 @@
     if ("ga" in window) {
       tracker = ga.getAll()[0];
       if (tracker)
-          tracker.send("event", "lookup", "url", url);
+          tracker.send("event", "lookup", url);
     }
     window.open(url, "_blank");
   });
