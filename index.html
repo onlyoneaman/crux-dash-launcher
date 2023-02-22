@@ -65,7 +65,7 @@
     if ("ga" in window) {
       tracker = ga.getAll()[0];
       if (tracker)
-          tracker.send("event", "lookup", cruxUrl);
+          tracker.send("event", "lookup", url.origin);
     }
     window.open(cruxUrl, "_blank");
   });
